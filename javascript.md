@@ -128,7 +128,7 @@ Object.prototype 的`__proto__`为 null
             return 'Hello'
         }
     }
-    <!-- 继承原先上属性 -->
+    <!-- 继承原型上属性 -->
     for (let key in funcA.prototype){
         funcB.prototype[key] = funcA.prototype[key]
     }
