@@ -14,3 +14,5 @@
 - modoules
 
 ## 六、vue-router
+
+- router-link 和 router-view

@@ -66,18 +66,19 @@ setHtmlFontSize();
 
 2. 根目录下添加 `postcss.config.js` 配置文件
 
-```json
+```js
 module.exports = {
   plugins: {
-    'autoprefixer': { // 报错删除此项
-      browsers: ['Android >= 4.0', 'iOS >= 8']
+    autoprefixer: {
+      // 报错删除此项
+      browsers: ["Android >= 4.0", "iOS >= 8"],
     },
-    'postcss-pxtorem': {
+    "postcss-pxtorem": {
       rootValue: 37.5, // 表示根元素字体大小，它会根据根元素大小进行单位转换
-      propList: ['*'] // 用来设定可以从 px 转为 rem 的属性
-    }
-  }
-}
+      propList: ["*"], // 用来设定可以从 px 转为 rem 的属性
+    },
+  },
+};
 ```
 
 注意：该插件不能转变行内样式中的 `px`
