@@ -165,8 +165,184 @@ Object.prototype 的`__proto__`为 null
 
 ## 六、异步队列
 
-- 所有代码从上到下依次执行，微任务和宏任务依次放入各自队列；`new Promise`参数方法直接执行，`then`为异步函数，需要`resolve`触发
+- 所有代码从上到下依次执行，微任务和宏任务依次放入各自队列，并开始计时；`new Promise`参数方法直接执行，`then`为异步函数，需要`resolve`触发
 
   同步代码执行完毕后，开始执行微任务队列，队列中如有宏任务依旧添加至宏任务队列中；
 
   微任务队列执行完毕后，开始执行宏任务队列，队列中如有微任务依旧添加至微任务队列中，并立即执行，之后再执行宏任务队列
+
+## 七、算法
+
+1. 排序
+   相关概念
+
+   稳定：如果 a 原本在 b 前面，而 a=b，排序之后 a 仍然在 b 的前面。
+
+   不稳定：如果 a 原本在 b 的前面，而 a=b，排序之后 a 可能会出现在 b 的后面。
+
+   时间复杂度：对排序数据的总的操作次数。反映当 n 变化时，操作次数呈现什么规律。
+
+   空间复杂度：是指算法在计算机内执行时所需存储空间的度量，它也是数据规模 n 的函数。
+
+- 冒泡排序
+
+```js
+function bubbleSort(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 1; j < arr.length - 1 - i; j++) {
+      if (arr[j] < arr[j - 1]) {
+        let num = arr[j];
+        arr[j] = arr[j - 1];
+        arr[j - 1] = num;
+      }
+    }
+  }
+  return arr;
+}
+```
+
+- 选择排序
+
+```js
+function selectSort(arr) {
+  let minIndex, temp;
+  for (let j = 0; j < arr.length - 1; j++) {
+    let minIndex = j;
+    for (let i = j + 1; i < arr.length; i++) {
+      if (arr[i] < arr[minIndex]) {
+        minIndex = i;
+      }
+    }
+    temp = arr[j];
+    arr[j] = arr[minIndex];
+    arr[minIndex] = temp;
+  }
+  return arr;
+}
+```
+
+- 插入排序
+
+```js
+function insertionSort(arr) {
+  let preIndex, current;
+  for (let i = 1; i < arr.length; i++) {
+    preIndex = i - 1;
+    current = arr[i];
+    while (preIndex >= 0 && arr[preIndex] > current) {
+      arr[preIndex + 1] = arr[preIndex];
+      preIndex--;
+    }
+    arr[preIndex + 1] = current;
+  }
+  return arr;
+}
+```
+
+- 基数排序
+
+```js
+var counter = [];
+function radixSort(arr, maxDigit) {
+  var mod = 10;
+  var dev = 1;
+  for (var i = 0; i < maxDigit; i++, dev *= 10, mod *= 10) {
+    for (var j = 0; j < arr.length; j++) {
+      var bucket = parseInt((arr[j] % mod) / dev);
+      if (counter[bucket] == null) {
+        counter[bucket] = [];
+      }
+      counter[bucket].push(arr[j]);
+    }
+    var pos = 0;
+    for (var j = 0; j < counter.length; j++) {
+      var value = null;
+      if (counter[j] != null) {
+        while ((value = counter[j].shift()) != null) {
+          arr[pos++] = value;
+        }
+      }
+    }
+  }
+  return arr;
+}
+```
+
+- 计数排序
+
+```js
+function countingSort(arr, maxValue) {
+  var bucket = new Array(maxValue + 1),
+    sortedIndex = 0;
+  (arrLen = arr.length), (bucketLen = maxValue + 1);
+  for (var i = 0; i < arrLen; i++) {
+    if (!bucket[arr[i]]) {
+      bucket[arr[i]] = 0;
+    }
+    bucket[arr[i]]++;
+  }
+  for (var j = 0; j < bucketLen; j++) {
+    while (bucket[j] > 0) {
+      arr[sortedIndex++] = j;
+      bucket[j]--;
+    }
+  }
+  return arr;
+}
+```
+
+2. 回文子串
+
+```js
+// 双指针
+```
+
+3. 最多字符
+
+```js
+function func(data) {
+  let arr = data.split("");
+  let map = new Map();
+  arr.forEach((i) => {
+    if (map.has(i)) {
+      let val = map.get(i);
+      map.set(i, ++val);
+    } else {
+      map.set(i, 1);
+    }
+  });
+  let key, value;
+  map.forEach((i, itemKey) => {
+    if (i > (value || 0)) {
+      key = itemKey;
+      value = i;
+    }
+  });
+  return `key:${key} value:${value}`;
+}
+func("Hello world!");
+```
+
+# 常识
+
+1. this 指向
+
+```js
+function parent() {
+  console.log(this.name);
+}
+parent()
+// 此时this指向全局 window、严格模式中 this 为 undefined
+
+let man = new parent()
+// 此时this指向新实例
+
+let obj = {
+  name: 'obj'
+  fn: function(){
+    console.log(this.name)
+  }
+}
+obj.fn()
+// 此时this指向obj，谁调用指向谁
+```
