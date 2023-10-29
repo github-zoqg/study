@@ -9,7 +9,9 @@
 2. `$mount`时，调用`mountComponent`方法。`mountComponent`内，先定义`updateComponent`方法如下：
 
 ```js
-updateComponent = vm._update(vm._render(), hydrating);
+updateComponent = () => {
+  vm._update(vm._render(), hydrating);
+};
 ```
 
 之后将`updateComponent`作为`expOrFn`参数,实例化渲染 watcher。实例化中调用`get`方法
@@ -474,6 +476,40 @@ install (Vue) {
 ```
 
 2. 路由状态存储
+
+3. hash、history 两种模式比较
+
+- 页面更新流程
+
+```js
+this.$router.push(path)
+ -->
+HashHistory.push()
+-->
+History.transitionTo()
+-->
+const  route = this.router.match(location, this.current)会进行地址匹配，得到一个对应当前地址的route(路由信息对象)
+-->
+History.updateRoute(route)
+ -->
+ app._route=route (Vue实例的_route改变)   由于_route属性是采用vue的数据劫持，当_route的值改变时，会执行响应的render( )
+-- >
+vm.render()   具体是在<router-view></router-view> 中render
+ -->
+window.location.hash = route.fullpath (浏览器地址栏显示新的路由的path)
+```
+
+HTML5History 模式的 vue-router 代码结构以及更新视图的逻辑与 hash 模式基本类似，和 HashHistory 的步骤基本一致，只是 HashHistory 的 push() 和 replace()变成了 HTML5History.pushState()和 HTML5History.replaceState(),浏览器地址栏 URL 的监听事件由 window.hashchange 改为 window.popstate
+
+hash 模式 会在浏览器的 URL 中加入'#'，而 HTM5History 就没有'#'号，URL 和正常的 URL 一样。 另外： history.pushState()相比于直接修改 hash 主要有以下优势：
+
+- pushState 设置的新 URL 可以是与当前 URL 同源的任意 URL；而 hash 只可修改#后面的部分，故只可设置与当前同文档的 URL
+
+- pushState 设置的新 URL 可以与当前 URL 一模一样，这样也会把记录添加到栈中；而 hash 设置的新值必须与原来不一样才会触发记录添加到栈中
+
+- pushState 通过 stateObject 可以添加任意类型的数据到记录中；而 hash 只可添加短字符串
+
+- pushState 可额外设置 title 属性供后续使用
 
 ## vue-diff
 
