@@ -499,7 +499,7 @@ vm.render()   具体是在<router-view></router-view> 中render
 window.location.hash = route.fullpath (浏览器地址栏显示新的路由的path)
 ```
 
-HTML5History 模式的 vue-router 代码结构以及更新视图的逻辑与 hash 模式基本类似，和 HashHistory 的步骤基本一致，只是 HashHistory 的 push() 和 replace()变成了 HTML5History.pushState()和 HTML5History.replaceState(),浏览器地址栏 URL 的监听事件由 window.hashchange 改为 window.popstate
+HTML5History 模式的 vue-router 代码结构以及更新视图的逻辑与 hash 模式基本类似，和 HashHistory 的步骤基本一致，只是 HashHistory 的 push() 和 replace()变成了 HTML5History.pushState()和 HTML5History.replaceState(),浏览器地址栏 URL 的监听事件由 `window.hashchange` 改为 `window.popstate`
 
 hash 模式 会在浏览器的 URL 中加入'#'，而 HTM5History 就没有'#'号，URL 和正常的 URL 一样。 另外： history.pushState()相比于直接修改 hash 主要有以下优势：
 

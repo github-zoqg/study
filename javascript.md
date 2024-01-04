@@ -2,9 +2,14 @@
 
 string、number、bloor、null、undefined、Symbol(es6)
 
+存储地址为**内存**的**栈**中，key 与 value 一一对应
+
 ## 二、引用数据类型：
 
 object（包括 array、regExp、date）、function
+
+存储地址为**内存**的**堆**中，**栈**中 key 赋值的为内存地址
+
 对象浅拷贝：引用地址相同，其中一个变化另一个也会产生变化
 对象深拷贝：创建一个新的对象，两个内存地址。方法有：
 
@@ -17,7 +22,7 @@ function deepClone(obj) {
   if (typeof obj !== "Object") {
     return obj;
   }
-  let newobj = {};
+  let newobj = Array.isArray(obj) ? [] : {};
   for (let key in obj) {
     newobj[key] = deepClone(obj[key]);
   }
@@ -323,6 +328,26 @@ function func(data) {
 func("Hello world!");
 ```
 
+## 模块化
+
+`import`和`require`的区别
+
+- `import`
+
+1. 编译时加载是静态引用
+2. 异步加载
+3. 加载为对象本身(相当于浅拷贝)
+4. es6 标准语法
+5. import 有利于 tree-shaking（移除 JavaScript 上下文中未引用的代码），require 对 tree-shaking 不友好。
+6. import 会触发代码分割（把代码分离到不同的 bundle 中，然后可以按需加载或者并行加载这些文件），require 不会触发。
+
+- `require`
+
+1. 运行时加载是动态引入
+2. 同步加载
+3. 加载为对象的拷贝值(通过 require 引入基础数据类型时，属于复制该变量。通过 require 引入复杂数据类型时，数据浅拷贝该对象。),当引入值被更改时,再被其他文件引入,其值仍不改变(为`key`添加`get`方法即可获取最新值)
+4. AMD 规范
+
 # 常识
 
 1. this 指向
@@ -333,6 +358,7 @@ function parent() {
 }
 parent()
 // 此时this指向全局 window、严格模式中 this 为 undefined
+// 当直接调用parent函数时，无论parent函数位于哪里，this都指向window
 
 let man = new parent()
 // 此时this指向新实例

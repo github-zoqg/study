@@ -6,6 +6,42 @@
      font-size: var(something-font-size);
    }
    ```
+2. background 线性渐变色
+
+```css
+linear-gradient(red, orange, yellow, green, blue);
+
+等价于
+
+linear-gradient(red 0%, orange 25%, yellow 50%, green 75%, blue 100%);
+
+例:background: linear-gradient(to right, red, orange, yellow, green, blue);
+```
+
+3. transition 过渡
+   前后两个样式 默认样式添加 transfrom 属性
+   .temp{
+   width:100px;
+   height:100px
+   // ...;
+   transition:all 2s linear .2s
+   }
+   .temp:hover{
+   width:200px
+   }
+4. animation 动画
+   <!-- 关键帧:keyframes -->
+   @keyframes animat{
+   from {
+   margin-left: -20%;
+   }
+   to {
+   margin-left: 100%;
+   }
+   }
+   .temp{
+   animation:animat 2s linear .2s infinite alternate
+   }
 
 ## 二、less
 
@@ -104,3 +140,13 @@ module.exports = {
 3. flex 布局
 
 注：自适应布局针对不同分辨率采用@media 媒体查询给不同范围的屏幕分别写一套样式布局，每一套样式布局采用的还是静态布局的方式。元素大小不会根据屏幕大小而改变，可能会切换到另一套样式。响应式布局元素大小会根据屏幕大小改变而改变。
+
+## 触发回流的属性和方法:
+
+clientWidth、clientHeight、clientTop、clientLeft
+offsetWidth、offsetHeight、offsetTop、offsetLeft
+scrollWidth、scrollHeight、scrollTop、scrollLeft
+scrollIntoView()、scrollIntoViewIfNeeded()
+getComputedStyle()
+getBoundingClientRect()
+scrollTo()

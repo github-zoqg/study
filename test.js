@@ -46,3 +46,5 @@ var proxy = reactive(target);
 console.log(proxy.dep.b.c);
 proxy.dep.b.c = "asdf";
 console.log("target: " + target.dep.b.c, ", proxy: " + proxy.dep.b.c);
+module.exports = { a: 1 };
+console.log(__dirname, "__dirname");
