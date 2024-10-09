@@ -194,7 +194,7 @@ Object.prototype 的`__proto__`为 null
 ```js
 function bubbleSort(arr) {
   for (let i = 0; i < arr.length - 1; i++) {
-    for (let j = 1; j < arr.length - 1 - i; j++) {
+    for (let j = 1; j < arr.length - i; j++) {
       if (arr[j] < arr[j - 1]) {
         let num = arr[j];
         arr[j] = arr[j - 1];
@@ -379,3 +379,7 @@ obj.fn()
 - 链接原型
 - 绑定 this 指向
 - 返回一个对象
+
+3. 数据结构
+
+- 栈、堆、队列、字符串、数组、树、图、表链、哈希表等

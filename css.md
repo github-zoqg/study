@@ -144,9 +144,34 @@ module.exports = {
 ## 触发回流的属性和方法:
 
 clientWidth、clientHeight、clientTop、clientLeft
+
 offsetWidth、offsetHeight、offsetTop、offsetLeft
+
 scrollWidth、scrollHeight、scrollTop、scrollLeft
+
 scrollIntoView()、scrollIntoViewIfNeeded()
+
 getComputedStyle()
+
 getBoundingClientRect()
+
 scrollTo()
+
+## 常识
+
+1. BFC
+
+- BFC（Block Formatting Context）：翻译成中文叫做块级格式化上下文，它决定了元素如何对其内容进行定位，以及与其它元素的关系和相互作用，当涉及到可视化布局时，其提供了一个环境，元素在这个环境中按照一定的规则进行布局排列
+- 如何触发 BFC
+  先来了解一下有哪些条件可以触发 BFC：
+
+  float 不为 none
+  position 为 absolute 或 fixed
+  overflow 不为 visible
+  display 为 inline-block 或 table 或 flow-root
+
+- 场景
+  父元素塌陷
+  margin-top 塌陷
+  垂直方向 margin 重叠
+  自适应布局(文字绕图)

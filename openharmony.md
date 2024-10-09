@@ -115,6 +115,8 @@ struct Parent {
 
 # 四、路由跳转
 
+单例和标准两种模式
+
 Router 模块提供了两种跳转模式，分别是 router.pushUrl()和 router.replaceUrl()。这两种模式决定了目标页面是否会替换当前页。
 
 - router.pushUrl()：目标页面不会替换当前页，而是压入页面栈。这样可以保留当前页的状态，并且可以通过返回键或者调用 router.back()方法返回到当前页。
@@ -245,7 +247,33 @@ aboutToAppear() {
 
 参考文档链接：https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/quick-start/arkts-application-state-management-overview.md/
 
-# 七、三方插件使用
+# 七、数据管理
+
+1. 首选项
+   首选项为应用提供 Key-Value 键值型的数据存储能力，支持应用持久化轻量级数据，并对其进行增删改查等。该存储对象中的数据会被缓存在内存中，因此它可以获得更快的存取速度
+   - 1、以 Key-Value 形式存储数据
+   - 2、非关系型数据库
+
+```ts
+import dataPreferences from "@ohos.data.preferences";
+let KEY_APP_FONT_SIZE = "KEY_APP_FONT_SIZE";
+let fontSize = "28";
+let preferences = dataPreferences.getPreferences(context, PREFERENCES_NAME);
+// 增
+preferences.put(KEY_APP_FONT_SIZE, fontSize);
+// 删
+preferences.delete(KEY_APP_FONT_SIZE);
+// 改
+
+// 查
+preferences.get(KEY_APP_FONT_SIZE, fontSize);
+// 判断保存的key是否存在
+preferences.has(KEY_APP_FONT_SIZE);
+// 数据持久化
+preferences.flush();
+```
+
+# 八、三方插件使用
 
 1. 打开 Terminal 窗口，通过如下指令进入到 entry 目录。
 
